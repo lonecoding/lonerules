@@ -1,0 +1,93 @@
+name: Validate, build and test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Python ${{ matrix.python }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python: ['3.11', '3.13', '3.14']
+        include:
+          - os: macos-latest
+            python: '3.11'
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install pinned dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Lint and format
+        run: |
+          python -m ruff check .
+          python -m ruff format --check .
+      - name: Validate sources strictly
+        run: python -m src.validate --strict
+      - name: Verify committed generated files
+        run: python -m src.build --check
+      - name: Build artifacts
+        run: python -m src.build
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+      - name: Verify build leaves no generated changes
+        run: git diff --exit-code -- dist/
+
+  release:
+    name: Publish tagged release
+    needs: verify
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e .
+      - name: Check tag matches project version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python - <<'PY'
+          import os
+          import tomllib
+          from pathlib import Path
+          version = tomllib.loads(Path('pyproject.toml').read_text())['project']['version']
+          if os.environ['RELEASE_TAG'] != f'v{version}':
+              raise SystemExit('Release tag must match pyproject.toml version')
+          PY
+      - name: Build and package
+        run: |
+          python -m src.validate --strict
+          python -m src.build --check
+          python -m src.build
+          python -m zipfile -c lonerules-quantumultx.zip dist docs/quantumultx.md LICENSE
+      - name: Publish artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$RELEASE_TAG" \
+            --verify-tag \
+            --title "LoneRules $RELEASE_TAG" \
+            --notes-file docs/release-notes.md \
+            lonerules-quantumultx.zip \
+            dist/quantumultx/basic.conf \
+            dist/quantumultx/rules/*.list \
+            dist/manifest.json dist/SOURCES.yaml dist/LICENSE
