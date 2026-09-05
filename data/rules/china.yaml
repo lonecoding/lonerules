@@ -1,0 +1,10 @@
+name: China
+source: lonerules-original
+
+rules:
+  - type: DOMAIN-SUFFIX
+    value: baidu.com
+  - type: DOMAIN-SUFFIX
+    value: qq.com
+  - type: DOMAIN-SUFFIX
+    value: taobao.com

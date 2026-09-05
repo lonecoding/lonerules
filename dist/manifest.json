@@ -1,0 +1,23 @@
+{
+  "categories": {
+    "AI": 4,
+    "Apple": 3,
+    "China": 3,
+    "Global": 3,
+    "Social": 4,
+    "Streaming": 3
+  },
+  "schema_version": 1,
+  "sha256": {
+    "LICENSE": "7c298e73a7d9cb68c665b7fa04059e0ec29c55e9bbe7cc3abd6111db95857633",
+    "SOURCES.yaml": "1e0e339b41a58817bacb20164b3c19b6c474c1cc90680a82ea1b2a91531c9373",
+    "quantumultx/basic.conf": "7dd2014da6656a4329051a2a4d9e172172b214ee75f0aa65e95b03ab27ca3b06",
+    "quantumultx/rules/AI.list": "5727537f2fd1885a6c551509a1baabbc67d20fcbe75f1a7581d25492d839a6a6",
+    "quantumultx/rules/Apple.list": "a5377352996aeb143551bffdc7ab409774280f6ca2a1d8ed936eb793deeb795e",
+    "quantumultx/rules/China.list": "86ca0d863a9feafa54f3424980ba3c0d4e6c81fc6caa0c91c7656ad85ac41f3a",
+    "quantumultx/rules/Global.list": "bdace5fbfe544efb48c9e2db6358928c8d254cc256d6f4a360734363b3d4d144",
+    "quantumultx/rules/Social.list": "bae6c37c9ae01852f56254555beb18d21375afd504949cb2d3d5790105e91e4c",
+    "quantumultx/rules/Streaming.list": "3a37c71bbd5c2cf84cdc0704475f8aee2a81764cb2c9cd5ae208135d9c7273c5"
+  },
+  "target": "quantumultx"
+}

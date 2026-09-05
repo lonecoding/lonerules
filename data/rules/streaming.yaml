@@ -1,0 +1,10 @@
+name: Streaming
+source: lonerules-original
+
+rules:
+  - type: DOMAIN-SUFFIX
+    value: netflix.com
+  - type: DOMAIN-SUFFIX
+    value: nflxvideo.net
+  - type: DOMAIN-SUFFIX
+    value: spotify.com

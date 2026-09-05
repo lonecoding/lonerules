@@ -1,0 +1,10 @@
+name: Apple
+source: lonerules-original
+
+rules:
+  - type: DOMAIN-SUFFIX
+    value: apple.com
+  - type: DOMAIN-SUFFIX
+    value: icloud.com
+  - type: DOMAIN-SUFFIX
+    value: mzstatic.com

@@ -1,0 +1,10 @@
+sources:
+  - id: lonerules-original
+    kind: original
+    author: lonecoding
+    url: https://github.com/lonecoding/lonerules
+    license: MIT
+    notes: >-
+      Small manually selected domain lists, independently authored for this project.
+      No third-party rule lists or code were imported. Service names identify
+      the intended coverage; this is not a complete service dependency inventory.

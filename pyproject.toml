@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lonerules"
+version = "0.1.0"
+description = "Unified proxy rule sources with reproducible client-specific builds"
+readme = "README.md"
+license = "MIT"
+authors = [{name = "lonecoding"}]
+requires-python = ">=3.11"
+dependencies = ["PyYAML==6.0.3", "idna==3.10"]
+
+[project.optional-dependencies]
+dev = ["ruff==0.12.12"]
+
+[project.urls]
+Repository = "https://github.com/lonecoding/lonerules"
+Issues = "https://github.com/lonecoding/lonerules/issues"
+
+[tool.setuptools.packages.find]
+include = ["src", "src.*"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

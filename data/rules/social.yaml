@@ -1,0 +1,12 @@
+name: Social
+source: lonerules-original
+
+rules:
+  - type: DOMAIN-SUFFIX
+    value: discord.com
+  - type: DOMAIN-SUFFIX
+    value: discordapp.com
+  - type: DOMAIN-SUFFIX
+    value: twitter.com
+  - type: DOMAIN-SUFFIX
+    value: x.com
